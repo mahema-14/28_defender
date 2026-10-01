@@ -13,7 +13,15 @@ PHASES = [random.uniform(0, math.tau) for _ in range(3)]
 
 def sky_color(wave):
     """Return an (r, g, b) sky colour for the current wave, or None for the default."""
-    pass
+    colors = (
+        (8, 10, 30),
+        (24, 10, 34),
+        (10, 24, 40),
+        (32, 14, 20),
+        (10, 32, 30),
+        (30, 26, 10),
+    )
+    return colors[(wave - 1) % len(colors)]
 
 
 def on_humanoid_rescued(humanoid):
