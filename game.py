@@ -26,7 +26,7 @@ def sky_color(wave):
 
 def on_humanoid_rescued(humanoid):
     """Called when the player catches a falling humanoid; add a bonus or celebration here."""
-    pass
+    humanoid.rescue_popup_started = pygame.time.get_ticks()
 
 
 def bonus_life_threshold():
@@ -224,6 +224,10 @@ class Game:
             sx = self.screen_x(humanoid.x)
             if -20 < sx < VIEW_W + 20:
                 pygame.draw.rect(screen, (90, 230, 120), (sx - 3, humanoid.y - 10, 6, 14))
+                elapsed = pygame.time.get_ticks() - getattr(humanoid, "rescue_popup_started", -900)
+                if 0 <= elapsed < 900:
+                    popup = self.font.render("+500", True, (255, 255, 120))
+                    screen.blit(popup, popup.get_rect(center=(sx, humanoid.y - 22 - elapsed / 50)))
         for lander in self.landers:
             sx = self.screen_x(lander.x)
             if -20 < sx < VIEW_W + 20:
